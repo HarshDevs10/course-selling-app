@@ -157,7 +157,7 @@ userRouter.get('/purchases', userMiddleware, async (req, res) => {
 
     res.json({
         mes: "your courses are:" ,
-        courses: purchase[0].courseId
+        courses: purchase.map(purchase => purchase.courseId)
     })
 })
 
