@@ -148,17 +148,6 @@ userRouter.get('/purchases', userMiddleware, async (req, res) => {
                 mes: "you have not purchased any course yet"
             })
         }
-        console.log(purchase)
-
-        courses = await courseModel.findById(purchase.courseId)
-                        .populate('creatorId')
-        
-        if (!courses){
-            return res.json({
-                mes: "an error occured while finding the courses"
-            })
-        }
-        console.log(courses)
     }
     catch(err){
         return res.json({
@@ -168,7 +157,7 @@ userRouter.get('/purchases', userMiddleware, async (req, res) => {
 
     res.json({
         mes: "your courses are:" ,
-        courses: courses
+        courses: purchase[0].courseId
     })
 })
 

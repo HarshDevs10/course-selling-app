@@ -28,20 +28,22 @@ courseRouter.get('/preview', async (req, res) => {
 })
 
 courseRouter.post('/purchase', userMiddleware, async (req, res) => {
-    const userId = req.body.userid
+    const userId = req.body.userId
     const courseId = req.body.courseId
+
+    console.log(userId)
+    console.log(courseId)
 
     try{
         const purchase = await purchaseModel.create({
             userId: userId,
             courseId: courseId
-        }).populate('userId')
-          .populate('courseId')
-        
+        })
     }
     catch(err){
         return res.json({
-            mes: "an error occured while making purchase"
+            mes: "an error occured while making purchase",
+            err: err
         })
     }
 
