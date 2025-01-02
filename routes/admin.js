@@ -89,7 +89,7 @@ adminRouter.post('/signin', async (req, res) => {
             email: email
         })
         console.log(admin)
-        if (!user){
+        if (admin === null){
             return res.json({
                 mes: "you have not signed up"
             })
@@ -100,6 +100,8 @@ adminRouter.post('/signin', async (req, res) => {
             mes: "could not find this user"
         })
     }
+
+    try{
     const hashedPassword = await bcrypt.compare(password, admin.password)
 
     if(hashedPassword){
@@ -115,7 +117,7 @@ adminRouter.post('/signin', async (req, res) => {
         })
     }
 
-    res.cookie("uid", token)
+    res.cookie("aid", token)
     res.send('you have successfully signed in')
 
     }
@@ -124,6 +126,13 @@ adminRouter.post('/signin', async (req, res) => {
             mes: "incorrect passowrd"
         })
     }
+}
+catch(err){
+    res.json({
+        mes: "an error occured in comparing the passwords",
+        err: err
+    })
+}
 
 })
 
@@ -256,6 +265,17 @@ adminRouter.get('/course/bulk', adminMiddleware, async(req, res) => {
     res.json({
         courses: courses
     })
+})
+
+adminRouter.delete('/logout', (req, res) => {
+    try{
+        res.clearCookie('aid')
+    }
+    catch(err){
+        res.send('an error occured while loging out ' + err)
+    }
+
+    res.send('you have successfully loged out')
 })
 
 module.exports = {

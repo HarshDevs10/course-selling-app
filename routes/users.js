@@ -1,4 +1,4 @@
-const { Router } = require('express')
+const { Router, application } = require('express')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -158,6 +158,18 @@ userRouter.get('/purchases', userMiddleware, async (req, res) => {
         courses: purchase.map(purchase => purchase.courseId)
     })
 })
+
+userRouter.delete('/logout', userMiddleware, (req, res) => {
+    try{
+        res.clearCookie('uid')
+    }
+    catch(err){
+        res.send('an error occured while loging out ' + err)
+    }
+
+    res.send('you have successfully logout')
+})
+
 
 module.exports = {
     userRouter: userRouter
