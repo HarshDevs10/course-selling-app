@@ -3,7 +3,7 @@ require('dotenv').config()
 const JWT_SECRET = process.env.admin_secret
 
 function adminMiddleware(req, res, next){
-    const token = req.headers.token
+    const token = req.cookies.uid
     
     if(!token){
         res.json({

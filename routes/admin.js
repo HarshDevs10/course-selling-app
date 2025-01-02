@@ -115,10 +115,8 @@ adminRouter.post('/signin', async (req, res) => {
         })
     }
 
-    res.json({
-        mes: "you have successfully signed in",
-        token: token
-    })
+    res.cookie("uid", token)
+    res.send('you have successfully signed in')
 
     }
     else{

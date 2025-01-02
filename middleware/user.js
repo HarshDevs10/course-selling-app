@@ -3,7 +3,7 @@ require('dotenv').config()
 const user_secret = process.env.user_secret
 
 function userMiddleware(req, res, next){
-    const token = req.headers.token
+    const token = req.cookies.uid
 
     if (!token){
         res.json({

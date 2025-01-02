@@ -115,11 +115,9 @@ userRouter.post('/signin', async (req, res) => {
             err: err
         })
     }
-    
-    res.json({
-        mes: "you have signed in successfully",
-        token: token
-    })
+
+    res.cookie("uid", token)
+    res.send('you have signed in')
     }
     else{
         return res.json({
